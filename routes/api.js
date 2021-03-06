@@ -13,12 +13,15 @@ module.exports = function (app) {
     app.post("/api/notes", function(req,res){
       const newNote = req.body;
       const uniqueID = Date.now(); //TODO: Should see if there's a better method to guarentee uniqueness;
+      
       newNote.id = uniqueID;
-      //TODO: consider trimming the text in newNote
+      newNote.title = newNote.title.trim();
+      newNote.text = newNote.text.trim();
+      
       fs.readFile(`${__dirname}/../db/db.json`, (err, data) => {
         if (err) throw err;
-        allNotes = JSON.parse(data)
 
+        allNotes = JSON.parse(data)
         allNotes.push(newNote);
 
         fs.writeFile(`${__dirname}/../db/db.json`,JSON.stringify(allNotes),'utf8',(err)=>{
@@ -36,8 +39,8 @@ module.exports = function (app) {
 
       fs.readFile(`${__dirname}/../db/db.json`, (err, data) => {
         if (err) throw err;
+        
         allNotes = JSON.parse(data)
-
         remainingNotes = allNotes.filter(({id}) => id!=deleteId);
 
         fs.writeFile(`${__dirname}/../db/db.json`,JSON.stringify(remainingNotes),'utf8',(err)=>{
