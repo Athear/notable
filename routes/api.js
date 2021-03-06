@@ -11,7 +11,21 @@ module.exports = function (app) {
 
 
     app.post("/api/notes", function(req,res){
+      const newNote = req.body;
+      //TODO: consider trimming the text in newNote
+      fs.readFile(`${__dirname}/../db/db.json`, (err, data) => {
+        if (err) throw err;
+        allNotes = JSON.parse(data)
 
+        allNotes.push(newNote);
+
+        fs.writeFile(`${__dirname}/../db/db.json`,JSON.stringify(allNotes),'utf8',(err)=>{
+          if (err) throw err;
+          console.log("new note saved"); //DEBUG??
+        })
+
+        res.json(allNotes);
+      });
     })
 
 
