@@ -12,6 +12,8 @@ module.exports = function (app) {
 
     app.post("/api/notes", function(req,res){
       const newNote = req.body;
+      const uniqueID = Date.now(); //TODO: Should see if there's a better method to guarentee uniqueness;
+      newNote.id = uniqueID;
       //TODO: consider trimming the text in newNote
       fs.readFile(`${__dirname}/../db/db.json`, (err, data) => {
         if (err) throw err;
@@ -30,7 +32,7 @@ module.exports = function (app) {
 
 
     app.delete("/api/notes", function(req,res){
-
+      console.log(req);
     })
 
   };
