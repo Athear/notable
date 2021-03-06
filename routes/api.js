@@ -23,7 +23,7 @@ module.exports = function (app) {
 
         fs.writeFile(`${__dirname}/../db/db.json`,JSON.stringify(allNotes),'utf8',(err)=>{
           if (err) throw err;
-          console.log("new note saved"); //DEBUG??
+          console.log("Saved note ID="+uniqueID); //DEBUG??
         })
 
         res.json(allNotes);
@@ -31,8 +31,23 @@ module.exports = function (app) {
     })
 
 
-    app.delete("/api/notes", function(req,res){
-      console.log(req);
+    app.delete("/api/notes/:id", function(req,res){
+      const deleteId = req.params.id;
+
+      fs.readFile(`${__dirname}/../db/db.json`, (err, data) => {
+        if (err) throw err;
+        allNotes = JSON.parse(data)
+
+        remainingNotes = allNotes.filter(({id}) => id!=deleteId);
+
+        fs.writeFile(`${__dirname}/../db/db.json`,JSON.stringify(remainingNotes),'utf8',(err)=>{
+          if (err) throw err;
+          console.log("Deleted note ID="+deleteId); //DEBUG??
+        })
+
+        res.json(allNotes);
+      });
+
     })
 
   };
