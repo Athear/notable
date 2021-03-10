@@ -38,7 +38,7 @@ Load a note by clicking the note title on the left side of the page.
 
 Delete a note by clicking the red trash icon next to the title.
 
-![Notes](.\assets\Notable_notes.png)
+![Notes](./assets/Notable_notes.png)
 
 -----
 
@@ -48,7 +48,7 @@ Delete a note by clicking the red trash icon next to the title.
 
 [GitHub repository](https://github.com/Athear/notable)
 
-[Live application]()
+[Live application](https://note-taker-hw11-tm.herokuapp.com/notes)
 
 
 
